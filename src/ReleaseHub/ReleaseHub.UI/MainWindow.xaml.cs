@@ -50,9 +50,7 @@ namespace ReleaseHub.UI
                     BuildNumber = 1592,
                     Version = "3.5.0",
                     VersionSuffix = "-rc1-dev15",
-                    ReleaseDate = new DateTime(2016, 8, 2),
                     BuildDate = new DateTime(2016, 7, 14),
-                    PublishPathRoot = @"\\nuget\nuget\share\releases\3.5.0.1592-rc1-dev15",
                 };
 
                 releasesData.Add(r1);
