@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,7 +57,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\ReleaseCommand.cs" />
+    <Compile Include="FileTextBox.cs" />
+    <Compile Include="FileUtility.cs" />
+    <Compile Include="Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ConvertVersionResult.cs" />
+    <Compile Include="Model\NuGetVsixPublishedCommand.cs" />
+    <Compile Include="Model\NuGetExePublishedCommand.cs" />
+    <Compile Include="Model\PackageInfo.cs" />
+    <Compile Include="Model\SymbolsExtractedCommand.cs" />
+    <Compile Include="Model\PackagesFinalized.cs" />
+    <Compile Include="Model\CopyNupkgs.cs" />
+    <Compile Include="Model\CopyNuGetVsix.cs" />
+    <Compile Include="Model\CopyNuGetExe.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +83,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Message.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Data.cs" />

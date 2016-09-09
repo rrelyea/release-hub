@@ -14,6 +14,14 @@ namespace ReleaseHub.Model
         public NuGetRelease()
         {
             NuGetExeCopied = false;
+            NuGetExePublished = false;
+            NuGetVsixCopied = false;
+            NuGetVsixPublished = false;
+            SymbolsExtracted = false;
+            SymbolsPublished = false;
+            PackagesCopied = false;
+            PackagesFinalized = false;
+            PackagesPublished = false;
         }
 
         private bool? nuGetExeCopied;
@@ -24,6 +32,46 @@ namespace ReleaseHub.Model
             set { SetField(ref nuGetExeCopied, value); }
         }
 
+        
+        private ICommand packagesFinalizedCommand;
+        public ICommand PackagesFinalizedCommand
+        {
+            get
+            {
+                if (packagesFinalizedCommand == null)
+                {
+                    packagesFinalizedCommand = new PackagesFinalizedCommand(this);
+                }
+
+                return packagesFinalizedCommand;
+            }
+        }
+        private ICommand copyNuGetVsixCommand;
+        public ICommand CopyNuGetVsixCommand
+        {
+            get
+            {
+                if (copyNuGetVsixCommand == null)
+                {
+                    copyNuGetVsixCommand = new CopyNuGetVsixCommand(this);
+                }
+
+                return copyNuGetVsixCommand;
+            }
+        }
+        private ICommand nuGetVsixPublishedCommand;
+        public ICommand NuGetVsixPublishedCommand
+        {
+            get
+            {
+                if (nuGetVsixPublishedCommand == null)
+                {
+                    nuGetVsixPublishedCommand = new NuGetVsixPublishedCommand(this);
+                }
+
+                return nuGetVsixPublishedCommand;
+            }
+        }
         private ICommand copyNuGetExeCommand;
         public ICommand CopyNuGetExeCommand
         {
@@ -38,61 +86,94 @@ namespace ReleaseHub.Model
             }
         }
 
-        private bool nuGetVsixCopied;
+        private ICommand nuGetExePublishedCommand;
+        public ICommand NuGetExePublishedCommand
+        {
+            get
+            {
+                if (nuGetExePublishedCommand == null)
+                {
+                    nuGetExePublishedCommand = new NuGetExePublishedCommand(this);
+                }
+
+                return nuGetExePublishedCommand;
+            }
+        }
+        private ICommand copyNupkgsCommand;
+        public ICommand CopyNupkgsCommand
+        {
+            get
+            {
+                if (copyNupkgsCommand == null)
+                {
+                    copyNupkgsCommand = new CopyNupkgsCommand(this);
+                }
+
+                return copyNupkgsCommand;
+            }
+        }
+        private bool? nuGetVsixCopied;
         [DefaultValue(false)]
-        public bool NuGetVsixCopied
+        public bool? NuGetVsixCopied
         {
             get { return nuGetVsixCopied; }
             set { SetField(ref nuGetVsixCopied, value); }
         }
 
-        private bool symbolsExtracted;
+        private bool? symbolsExtracted;
         [DefaultValue(false)]
-        public bool SymbolsExtracted
+        public bool? SymbolsExtracted
         {
             get { return symbolsExtracted; }
             set { SetField(ref symbolsExtracted, value); }
         }
 
-        private bool packagesFinalized;
+        private bool? packagesCopied;
         [DefaultValue(false)]
-        public bool PackagesFinalized
+        public bool? PackagesCopied
+        {
+            get { return packagesCopied; }
+            set { SetField(ref packagesCopied, value); }
+        }
+
+        private bool? packagesFinalized;
+        [DefaultValue(false)]
+        public bool? PackagesFinalized
         {
             get { return packagesFinalized; }
             set { SetField(ref packagesFinalized, value); }
         }
 
-        private bool nuGetExePublished;
+        private bool? nuGetExePublished;
         [DefaultValue(false)]
-        public bool NuGetExePublished
+        public bool? NuGetExePublished
         {
             get { return nuGetExePublished; }
             set { SetField(ref nuGetExePublished, value); }
         }
 
-        private bool nuGetVsixPublished;
+        private bool? nuGetVsixPublished;
         [DefaultValue(false)]
-        public bool NuGetVsixPublished
+        public bool? NuGetVsixPublished
         {
             get { return nuGetVsixPublished; }
             set { SetField(ref nuGetVsixPublished, value); }
         }
 
-        private bool symbolsPublished;
+        private bool? symbolsPublished;
         [DefaultValue(false)]
-        public bool SymbolsPublished
+        public bool? SymbolsPublished
         {
             get { return symbolsPublished; }
             set { SetField(ref symbolsPublished, value); }
         }
 
-        private bool packagesPublished;
+        private bool? packagesPublished;
         [DefaultValue(false)]
-        public bool PackagesPublished
+        public bool? PackagesPublished
         {
             get { return packagesPublished; }
             set { SetField(ref packagesPublished, value); }
         }
-
     }
 }

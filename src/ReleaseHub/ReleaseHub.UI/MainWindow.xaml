@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ReleaseHub.UI"
         xmlns:data="clr-namespace:ReleaseHub.Model"
         mc:Ignorable="d"
-        Title="ReleaseHub" Height="350" Width="525">
+        Title="ReleaseHub" Height="400" Width="525">
     <Window.Resources>
         <DataTemplate DataType="{x:Type data:Release}">
             <TextBlock Text="{Binding Name}" />
@@ -21,29 +21,43 @@
         <ListBox Name="releases" ItemsSource="{Binding .}" />
         <StackPanel Grid.Column="1" DataContext="{Binding ElementName=releases,Path=SelectedItem}" Margin="5.333,10,4.667,-0.333">
             <TextBox Text="{Binding Name}" />
+            <TextBox Text="{Binding BranchName}" />
             <TextBox Text="{Binding Version}" />
             <TextBox Text="{Binding VersionSuffix}" />
             <TextBox Text="{Binding BuildNumber}" />
             <TextBox Text="{Binding BuildDate}" />
             <TextBox Text="{Binding ReleaseDate}" />
-            <TextBox Text="{Binding PublishPathRoot}" />
+            <local:FileTextBox Text="{Binding SourcePathRoot}" />
+            <local:FileTextBox Text="{Binding SourcePath, Mode=OneWay}" />
+            <local:FileTextBox Text="{Binding PublishPathRoot}" />
+            <local:FileTextBox Text="{Binding PublishPath, Mode=OneWay}" />
             <UniformGrid Rows="4" Columns="3" Width="290">
                 <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">NuGet.exe</TextBlock>
                 <CheckBox IsChecked="{Binding NuGetExeCopied, Mode=TwoWay}" 
                     Command="{Binding CopyNuGetExeCommand}">Copied</CheckBox>
-                <CheckBox IsChecked="{Binding NuGetExePublished, Mode=TwoWay}">Published</CheckBox>
+                <CheckBox IsChecked="{Binding NuGetExePublished, Mode=TwoWay}"
+                          Command="{Binding NuGetExePublishedCommand}">Publish Request</CheckBox>
 
                 <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">NuGet.Tools.vsix</TextBlock>
-                <CheckBox IsChecked="{Binding NuGetVsixCopied, Mode=TwoWay}">Copied</CheckBox>
-                <CheckBox IsChecked="{Binding NuGetVsixPublished, Mode=TwoWay}">Published</CheckBox>
+                <CheckBox IsChecked="{Binding NuGetVsixCopied, Mode=TwoWay}"
+                          Command="{Binding CopyNuGetVsixCommand}">Copied</CheckBox>
+                <CheckBox IsChecked="{Binding NuGetVsixPublished, Mode=TwoWay}"
+                          Command="{Binding NuGetVsixPublishedCommand}">Publish Request</CheckBox>
+
+                <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">Packages</TextBlock>
+                <CheckBox IsChecked="{Binding PackagesCopied, Mode=TwoWay}"
+                          Command="{Binding CopyNupkgsCommand}">Copied</CheckBox>
+                <ContentControl />
+
+                <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">Packages</TextBlock>
+                <CheckBox IsChecked="{Binding PackagesFinalized, Mode=TwoWay}"
+                          Command="{Binding PackagesFinalizedCommand}">Finalized</CheckBox>
+                <CheckBox IsChecked="{Binding PackagesPublished, Mode=TwoWay}">Published</CheckBox>
 
                 <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">Symbols</TextBlock>
                 <CheckBox IsChecked="{Binding SymbolsExtracted, Mode=TwoWay}">Extracted</CheckBox>
                 <CheckBox IsChecked="{Binding SymbolsPublished, Mode=TwoWay}">Published</CheckBox>
 
-                <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">nupkgs</TextBlock>
-                <CheckBox IsChecked="{Binding PackagesFinalized, Mode=TwoWay}">Finalized</CheckBox>
-                <CheckBox IsChecked="{Binding PackagesPublished, Mode=TwoWay}">Published</CheckBox>
 
             </UniformGrid>
         </StackPanel>

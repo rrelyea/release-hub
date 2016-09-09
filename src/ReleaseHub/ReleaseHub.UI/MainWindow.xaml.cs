@@ -47,7 +47,7 @@ namespace ReleaseHub.UI
                 {
                     Name = "3.5.0-rc1",
                     BranchName = "dev",
-                    BuildNumber = 1592,
+                    BuildNumber = "1592",
                     Version = "3.5.0",
                     VersionSuffix = "-rc1-dev15",
                     BuildDate = new DateTime(2016, 7, 14),
