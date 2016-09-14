@@ -27,9 +27,9 @@
             <TextBox Text="{Binding BuildNumber}" />
             <TextBox Text="{Binding BuildDate}" />
             <TextBox Text="{Binding ReleaseDate}" />
-            <local:FileTextBox Text="{Binding SourcePathRoot}" />
+            <local:FileTextBox Text="{Binding SourcePathRoot, Mode=TwoWay}" />
             <local:FileTextBox Text="{Binding SourcePath, Mode=OneWay}" />
-            <local:FileTextBox Text="{Binding PublishPathRoot}" />
+            <local:FileTextBox Text="{Binding PublishPathRoot, Mode=TwoWay}" />
             <local:FileTextBox Text="{Binding PublishPath, Mode=OneWay}" />
             <UniformGrid Rows="4" Columns="3" Width="290">
                 <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0">NuGet.exe</TextBlock>

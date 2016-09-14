@@ -159,7 +159,8 @@ namespace ReleaseHub.Model
         {
             if (PublishPathRoot != null)
             {
-                publishPath = System.IO.Path.Combine(PublishPathRoot, Version + "." + GetBuildNumber() + "-" + VersionSuffix);
+                var versionSuffixString = string.IsNullOrEmpty(VersionSuffix) ? "" : "-" + VersionSuffix;
+                publishPath = System.IO.Path.Combine(PublishPathRoot, Version + "." + GetBuildNumber() + versionSuffixString);
                 OnPropertyChanged("PublishPath");
             }
         }
