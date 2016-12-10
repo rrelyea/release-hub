@@ -25,7 +25,8 @@ namespace ReleaseHub.Model
             set
             {
                 SetField(ref branchName, value);
-                CalculateSourcePath();
+                CalculateNugetExeSourcePath();
+                CalculateVsixSourcePath();
             }
         }
 
@@ -37,22 +38,37 @@ namespace ReleaseHub.Model
             set { SetField(ref sha, value); }
         }
 
-        private string buildNumber;
+        private string nugetExeBuildNumber;
         [DefaultValue(null)]
-        public string BuildNumber
+        public string NugetExeBuildNumber
         {
-            get { return buildNumber; }
+            get { return nugetExeBuildNumber; }
             set
             {
-                SetField(ref buildNumber, value);
+                SetField(ref nugetExeBuildNumber, value);
                 CalculatePublishPath();
-                CalculateSourcePath();
+                CalculateNugetExeSourcePath();
+                CalculateVsixSourcePath();
             }
         }
 
-        public string GetBuildNumber()
+        private string vsixBuildNumber;
+        [DefaultValue(null)]
+        public string VsixBuildNumber
         {
-            if (BuildNumber == "*")
+            get { return vsixBuildNumber; }
+            set
+            {
+                SetField(ref vsixBuildNumber, value);
+                CalculatePublishPath();
+                CalculateNugetExeSourcePath();
+                CalculateVsixSourcePath();
+            }
+        }
+
+        public string GetNugetExeBuildNumber()
+        {
+            if (NugetExeBuildNumber == "*")
             {
                 // get latest build
                 if (Directory.Exists(SourcePathRoot))
@@ -68,13 +84,40 @@ namespace ReleaseHub.Model
                 }
                 else
                 {
-                    return BuildNumber;
+                    return NugetExeBuildNumber;
                 }
 
             }
             else
             {
-                return BuildNumber;
+                return NugetExeBuildNumber;
+            }
+        }
+        public string GetVsixBuildNumber()
+        {
+            if (VsixBuildNumber == "*")
+            {
+                // get latest build
+                if (Directory.Exists(SourcePathRoot))
+                {
+                    var dir = new DirectoryInfo(Path.Combine(SourcePathRoot, BranchName));
+                    var buildDirs = dir.GetDirectories();
+                    SortedList<int, string> orderDirs = new SortedList<int, string>();
+                    foreach (var buildDir in buildDirs)
+                    {
+                        orderDirs.Add(Int32.Parse(buildDir.Name), buildDir.Name);
+                    }
+                    return orderDirs.Last().Value;
+                }
+                else
+                {
+                    return VsixBuildNumber;
+                }
+
+            }
+            else
+            {
+                return VsixBuildNumber;
             }
         }
 
@@ -160,25 +203,40 @@ namespace ReleaseHub.Model
             if (PublishPathRoot != null)
             {
                 var versionSuffixString = string.IsNullOrEmpty(VersionSuffix) ? "" : "-" + VersionSuffix;
-                publishPath = System.IO.Path.Combine(PublishPathRoot, Version + "." + GetBuildNumber() + versionSuffixString);
+                publishPath = System.IO.Path.Combine(PublishPathRoot, Version + versionSuffixString);
                 OnPropertyChanged("PublishPath");
             }
         }
 
-        private string sourcePath;
-        public string SourcePath
+        private string nugetExeSourcePath;
+        public string NugetExeSourcePath
         {
-            get { return sourcePath; }
+            get { return nugetExeSourcePath; }
         }
 
-        public void CalculateSourcePath()
+        private string vsixSourcePath;
+        public string VsixSourcePath
+        {
+            get { return vsixSourcePath; }
+        }
+
+        public void CalculateNugetExeSourcePath()
         {
             if (sourcePathRoot != null)
             {
-                sourcePath = System.IO.Path.Combine(sourcePathRoot, BranchName + "\\" + GetBuildNumber());
-                OnPropertyChanged("SourcePath");
+                nugetExeSourcePath = System.IO.Path.Combine(sourcePathRoot, BranchName + "\\" + GetNugetExeBuildNumber());
+                OnPropertyChanged("NugetExeSourcePath");
             }
         }
+        public void CalculateVsixSourcePath()
+        {
+            if (sourcePathRoot != null)
+            {
+                vsixSourcePath = System.IO.Path.Combine(sourcePathRoot, BranchName + "\\" + GetVsixBuildNumber());
+                OnPropertyChanged("VsixSourcePath");
+            }
+        }
+
         public void BeginInit()
         {
 
@@ -187,7 +245,8 @@ namespace ReleaseHub.Model
         public void EndInit()
         {
             CalculatePublishPath();
-            CalculateSourcePath();
+            CalculateNugetExeSourcePath();
+            CalculateVsixSourcePath();
         }
     }
 }

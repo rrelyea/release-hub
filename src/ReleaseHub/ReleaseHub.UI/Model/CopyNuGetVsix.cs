@@ -31,13 +31,16 @@ namespace ReleaseHub.Model
 
             NuGetRelease.NuGetVsixCopied = null;
 
-            string sourcePathDir = NuGetRelease.SourcePath;
+            string nugetExeSourcePathDir = NuGetRelease.NugetExeSourcePath;
+            string vsixSourcePathDir = NuGetRelease.VsixSourcePath;
             string publishPathDir = NuGetRelease.PublishPath;
 
-            string exeSourcePath = sourcePathDir + @"\artifacts\NuGet.exe";
-
-            string dev14VsixFile = Path.Combine(publishPathDir, "artifacts", "dev14") + @"\NuGet.Tools.vsix";
-            string dev15VsixFile = Path.Combine(publishPathDir, "artifacts", "dev15") + @"\NuGet.Tools.vsix";
+            string exeSourcePath = nugetExeSourcePathDir + @"\artifacts\NuGet.exe";
+            string vsixFullVersionNumber = NuGetRelease.Version + "." + NuGetRelease.GetVsixBuildNumber();
+            string dev14VsixDestDir = Path.Combine(publishPathDir, "vsix14-" + vsixFullVersionNumber);
+            string dev15VsixDestDir = Path.Combine(publishPathDir, "vsix15-" + vsixFullVersionNumber);
+            string dev14VsixFile = dev14VsixDestDir + @"\NuGet.Tools.vsix";
+            string dev15VsixFile = dev15VsixDestDir + @"\NuGet.Tools.vsix";
 
             // DO WORK
             if (desiredState.HasValue)
@@ -45,8 +48,6 @@ namespace ReleaseHub.Model
                 if (desiredState.Value)
                 {
                     // do copy
-                    var nugetExeVersion = FileVersionInfo.GetVersionInfo(exeSourcePath);
-
                     DirectoryInfo wsrTcBaseDir = new DirectoryInfo(@"\\wsr-tc\drops\NuGet.Signed.AllLanguages");
                     var wsrBuilds = wsrTcBaseDir.EnumerateDirectories("build-*").ToList();
 
@@ -60,7 +61,7 @@ namespace ReleaseHub.Model
                         if (nugetDll.Exists)
                         {
                             var version = FileVersionInfo.GetVersionInfo(nugetDll.FullName);
-                            if (version.FileVersion == nugetExeVersion.FileVersion)
+                            if (version.FileVersion.ToString() == vsixFullVersionNumber)
                             {
                                 //Log.Text += version.FileVersion + " == " + nugetExeVersion.FileVersion + " in " + signedBuildDir.FullName + "\n";
                                 matchingSignedBuildDir = signedBuildDir;
@@ -71,10 +72,15 @@ namespace ReleaseHub.Model
 
                     if (matchingSignedBuildDir != null)
                     {
-                        Directory.CreateDirectory(Path.Combine(publishPathDir, "artifacts", "dev14"));
+                        Directory.CreateDirectory(dev14VsixDestDir);
                         File.Copy(Path.Combine(matchingSignedBuildDir.FullName, "Signed", "VSIX", "14") + @"\NuGet.Tools.vsix", dev14VsixFile);
-                        Directory.CreateDirectory(Path.Combine(publishPathDir, "artifacts", "dev15"));
-                        File.Copy(Path.Combine(matchingSignedBuildDir.FullName, "Signed", "VSIX", "15") + @"\NuGet.Tools.vsix", dev15VsixFile);
+
+                        var dev15VsixFileFromSourceLocation = Path.Combine(matchingSignedBuildDir.FullName, "Signed", "VSIX", "15") + @"\NuGet.Tools.vsix";
+                        if (File.Exists(dev15VsixFileFromSourceLocation))
+                        {
+                            Directory.CreateDirectory(dev15VsixDestDir);
+                            File.Copy(dev15VsixFileFromSourceLocation, dev15VsixFile);
+                        }
                     }
                     else
                     {

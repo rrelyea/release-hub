@@ -30,7 +30,7 @@ namespace ReleaseHub.Model
 
             NuGetRelease.PackagesFinalized = null;
 
-            string sourcePathDir = NuGetRelease.SourcePath;
+           // string vsixSourcePathDir = NuGetRelease.VsixSourcePath;
             string publishPathDir = NuGetRelease.PublishPath;
 
             string destinationFolder = Path.Combine(publishPathDir, "nupkgs", "nupkgsToPublish");

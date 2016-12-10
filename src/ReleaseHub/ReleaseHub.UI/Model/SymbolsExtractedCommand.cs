@@ -30,7 +30,7 @@ namespace ReleaseHub.Model
 
             NuGetRelease.SymbolsExtracted = null;
 
-            string sourcePathDir = NuGetRelease.SourcePath;
+            string vsixSourcePathDir = NuGetRelease.VsixSourcePath;
             string publishPathDir = NuGetRelease.PublishPath;
 
 

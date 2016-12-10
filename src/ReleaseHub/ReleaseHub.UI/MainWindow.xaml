@@ -20,15 +20,17 @@
         </Grid.ColumnDefinitions>
         <ListBox Name="releases" ItemsSource="{Binding .}" />
         <StackPanel Grid.Column="1" DataContext="{Binding ElementName=releases,Path=SelectedItem}" Margin="5.333,10,4.667,-0.333">
-            <TextBox Text="{Binding Name}" />
-            <TextBox Text="{Binding BranchName}" />
-            <TextBox Text="{Binding Version}" />
-            <TextBox Text="{Binding VersionSuffix}" />
-            <TextBox Text="{Binding BuildNumber}" />
-            <TextBox Text="{Binding BuildDate}" />
-            <TextBox Text="{Binding ReleaseDate}" />
+            <TextBox Text="{Binding Name}" ToolTip="Name" />
+            <TextBox Text="{Binding BranchName}" ToolTip="BranchName"/>
+            <TextBox Text="{Binding Version}" ToolTip="Version"/>
+            <TextBox Text="{Binding VersionSuffix}" ToolTip="VersionSuffix"/>
+            <TextBox Text="{Binding NugetExeBuildNumber}" ToolTip="NugetExeBuildNumber"/>
+            <TextBox Text="{Binding VsixBuildNumber}" ToolTip="VsixBuildNumber"/>
+            <TextBox Text="{Binding BuildDate}" ToolTip="BuildDate"/>
+            <TextBox Text="{Binding ReleaseDate}" ToolTip="ReleaseDate" />
             <local:FileTextBox Text="{Binding SourcePathRoot, Mode=TwoWay}" />
-            <local:FileTextBox Text="{Binding SourcePath, Mode=OneWay}" />
+            <local:FileTextBox Text="{Binding NugetExeSourcePath, Mode=OneWay}" ToolTip="NugetExeSourcePath"/>
+            <local:FileTextBox Text="{Binding VsixSourcePath, Mode=OneWay}" ToolTip="VsixSourcePath"/>
             <local:FileTextBox Text="{Binding PublishPathRoot, Mode=TwoWay}" />
             <local:FileTextBox Text="{Binding PublishPath, Mode=OneWay}" />
             <UniformGrid Rows="4" Columns="3" Width="290">

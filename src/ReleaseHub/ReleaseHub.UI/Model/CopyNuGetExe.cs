@@ -29,11 +29,12 @@ namespace ReleaseHub.Model
 
             NuGetRelease.NuGetExeCopied = null;
 
-            string sourcePathDir = NuGetRelease.SourcePath;
+            string nugetExeSourcePathDir = NuGetRelease.NugetExeSourcePath;
+            string vsixSourcePathDir = NuGetRelease.VsixSourcePath;
             string publishPathDir = NuGetRelease.PublishPath;
 
-            string sourcePath = sourcePathDir + @"\artifacts\NuGet.exe";
-            string publishPath = System.IO.Path.Combine(publishPathDir, "artifacts");
+            string sourcePath = nugetExeSourcePathDir + @"\artifacts\NuGet.exe";
+            string publishPath = System.IO.Path.Combine(publishPathDir, "NuGet.exe-" + NuGetRelease.Version + "." + NuGetRelease.GetNugetExeBuildNumber());
             string publishFile = System.IO.Path.Combine(publishPath, "NuGet.exe");
 
             // DO WORK

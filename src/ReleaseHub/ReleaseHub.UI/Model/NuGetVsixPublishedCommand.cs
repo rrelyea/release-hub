@@ -29,13 +29,13 @@ namespace ReleaseHub.Model
 
             NuGetRelease.NuGetVsixPublished = null;
 
-            string sourcePathDir = NuGetRelease.SourcePath;
+            string vsixSourcePathDir = NuGetRelease.VsixSourcePath;
             string publishPathDir = NuGetRelease.PublishPath;
 
-            string source14Path = sourcePathDir + @"\artifacts\Dev14\NuGet.Tools.vsix";
-            string source15Path = sourcePathDir + @"\artifacts\Dev15\NuGet.Tools.vsix";
-            string publish14Path = System.IO.Path.Combine(publishPathDir, "artifacts", "dev14");
-            string publish15Path = System.IO.Path.Combine(publishPathDir, "artifacts", "dev15");
+            string source14Path = vsixSourcePathDir + @"\artifacts\Dev14\NuGet.Tools.vsix";
+            string source15Path = vsixSourcePathDir + @"\artifacts\Dev15\NuGet.Tools.vsix";
+            string publish14Path = System.IO.Path.Combine(publishPathDir, "vsix14" + NuGetRelease.GetVsixBuildNumber());
+            string publish15Path = System.IO.Path.Combine(publishPathDir, "vsix15" + NuGetRelease.GetVsixBuildNumber());
             string publish14File = System.IO.Path.Combine(publish14Path, "NuGet.Tools.vsix");
             string publish15File = System.IO.Path.Combine(publish15Path, "NuGet.Tools.vsix");
 

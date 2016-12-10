@@ -32,14 +32,21 @@ namespace ReleaseHub.Model
             set { SetField(ref sha, value); }
         }
 
-        private int? buildNumber;
+        private int? nugetExebuildNumber;
         [DefaultValue(null)]
-        public int? BuildNumber
+        public int? NugetExeBuildNumber
         {
-            get { return buildNumber; }
-            set { SetField(ref buildNumber, value); }
+            get { return nugetExebuildNumber; }
+            set { SetField(ref nugetExebuildNumber, value); }
         }
 
+        private int? vsixBuildNumber;
+        [DefaultValue(null)]
+        public int? VsixBuildNumber
+        {
+            get { return vsixBuildNumber; }
+            set { SetField(ref vsixBuildNumber, value); }
+        }
         private string version;
         [DefaultValue(null)]
         public string Version
